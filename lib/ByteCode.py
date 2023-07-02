@@ -12,6 +12,13 @@ class TypedInteger(int):
     signed: bool
 
     @classmethod
+    def ctype(cls) -> str:
+        if cls.signed:
+            return f"int{cls.byte_size * 8}_t"
+        else:
+            return f"uint{cls.byte_size * 8}_t"
+
+    @classmethod
     def toBytes(cls, value: int) -> bytes:
         return value.to_bytes(cls.byte_size, ENDIAN, signed=cls.signed)
 
@@ -22,7 +29,7 @@ class TypedInteger(int):
         return cls.from_bytes(value, ENDIAN, signed=cls.signed)
 
     @classmethod
-    def ARRAY(cls, count:int, start: int = 0, prefix: str = None):
+    def ARRAY(cls, count: int, start: int = 0, prefix: str = None):
         r = range(start, start + count)
         if prefix is None:
             return dict([(n, cls) for n in r])

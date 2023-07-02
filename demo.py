@@ -7,7 +7,7 @@
 from time import sleep
 from lib import MultiWii, MSP
 
-fc = MultiWii()
+fc = MultiWii("/dev/ttyACM0")
 
 print(fc.invoke(MSP.RAW_IMU()))
 print(fc.invoke(MSP.RC()))
